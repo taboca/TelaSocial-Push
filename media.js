@@ -56,16 +56,15 @@ document.getElementById("datastore").value=evt.target.result;
              reader.readAsDataURL(fileEntry);
         }
 
-       function fail(evt) {
-             console.log("ERROR:" + evt);
-            for (prop in evt.target) {
-                 console.log(prop + " = " + evt.target[prop]);
-            }
-       } 
+
+ function fail(evt) {
+        console.log(evt.target.error.code);
+    }
+
 
        function onFileSystemSuccess(fileSystem)
        {
-            alert("FS: " + fileSystem.name);
+            alert("FS: " + fileSystem.name + " trying to get " + file);
             fileSystem.root.getFile(file, {'create':false}, success, fail);
        }
 }

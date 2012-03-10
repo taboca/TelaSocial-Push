@@ -121,13 +121,13 @@ function recordAudio() {
      if (recTime >= 5) {
        clearInterval(recInterval);
        mediaRec.stopRecord();
-       tryGetFile(mediaRec.src);
      }
    }, 1000);
 }
 
 function onSuccess() {
    console.log("recordAudio():Audio Success");
+       tryGetFile(mediaRec.src);
 }
 
 function onError(error) {

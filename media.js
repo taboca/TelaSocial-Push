@@ -65,7 +65,8 @@ document.getElementById("datastore").value=evt.target.result;
        function onFileSystemSuccess(fileSystem)
        {
             alert("FS: " + fileSystem.name + " trying to get " + file);
-            fileSystem.root.getFile(file, {'create':false}, success, fail);
+            //fileSystem.root.getFile(file, {'create':false}, success, fail);
+            fileSystem.root.getFile(file, 0, success, fail);
        }
 }
 

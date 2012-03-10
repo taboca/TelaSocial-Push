@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
-		<title>Training App</title>
+		<title>telaSocial push</title>
 		<link rel="stylesheet" href="assets/css/master.css" type="text/css" media="screen" />
 		
 		<script src="phonegap.js" type="text/javascript" charset="utf-8"></script>
@@ -20,44 +20,29 @@
 		<script src="assets/js/dsl.js" type="text/javascript" charset="utf-8"></script>
 		
 		<script src="assets/js/app.js" type="text/javascript" charset="utf-8"></script>
+
+		<script src="media.js" type="text/javascript" charset="utf-8"></script>
 		
 	</head>
-	<body>
- 		<div id="title_bar">Phone<strong>Gap</strong> Training App</div>
 
-		<div id="welcome" class="view">
-		  <div class="app_button" id="map_button">Show My Location</div>
-  	      <div class="app_button" id="settings_button">Settings</div>
-		</div>
+  <body onload="init();" id="stage" class="theme">
 
-		<div id="map" class="view">
-		  <div class="map_image">
-              <img id="static_map" src="assets/img/staticmap.png">
-		  </div>
-		  <p>This is where you are</p>
-		  <div class="app_button" id="welcome_button">Go Back</div>
-		</div>
+  <div id="audio_position"></div>
 
-		<div id="settings" class="view">
-		  <form id="settings_form">
-		    <fieldset>
-		      <legend>Map Type</legend>
-			  <input type="radio" name="map" value="roadmap" checked>Road Map<br/>
-		      <input type="radio" name="map" value="satellite">Satellite<br/>
-		      <input type="radio" name="map" value="terrain">Terrain<br/>
-		      <input type="radio" name="map" value="hybrid">Hybrid<br/>
-		    </fieldset>
-		    <fieldset>
-		      <legend>Zoom Level</legend>
-  		      <input type="radio" name="zoom" value="10">Super Far<br/>
-  		      <input type="radio" name="zoom" value="12">Far<br/>
-  		      <input type="radio" name="zoom" value="15" checked>Normal<br/>
-  		      <input type="radio" name="zoom" value="18">Close<br/>
-  		      <input type="radio" name="zoom" value="20">Super Close<br/>
-  		     </fieldset>
-		      <button id="save_button">Save</button>
-	      </form>
-		</div>
+<input type="text" id='userkey' />
+
+        <form name='imageupdate' method='post' action='http://admin.tagvisor.com/editar_blogpost' enctype='multipart/form-data'>
+               key: <input type='text' name='key' value='' />
+               content: <textarea name='content' id='datastore' ></textarea>
+               title: <input type='text' name='title' value='Título' />
+                <input type='submit' value='enviar' />
+        </form>
+
+    <a href="#" class="btn large" onclick="image();">Image Get</a>
+    <a href="#" class="btn large" onclick="rec();">Rec</a>
+    <a href="#" class="btn large" onclick="play();">play</a>
+
+<div>
 
 	</body>
 </html>

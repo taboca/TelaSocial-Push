@@ -110,9 +110,20 @@ function play() {
    playAudio("myrecording.mp3");
 } 
 
+function onSuccess() {
+   console.log("recordAudio():Audio Success and will try to get"+ mediaRec.src);
+   tryGetFile(mediaRec.src);
+}
+
+function onError(error) {
+   console.log("recordAudio():Audio Error:" + error);
+}
+
+var mediaRec = null;
+
 function recordAudio() {
    var src = "myrecording.mp3";
-   var mediaRec = new Media(src, onSuccess, onError);
+   mediaRec = new Media(src, onSuccess, onError);
    mediaRec.startRecord();
    var recTime = 0;
    var recInterval = setInterval(function() {
@@ -123,15 +134,6 @@ function recordAudio() {
        mediaRec.stopRecord();
      }
    }, 1000);
-}
-
-function onSuccess() {
-   console.log("recordAudio():Audio Success");
-       tryGetFile(mediaRec.src);
-}
-
-function onError(error) {
-   console.log("recordAudio():Audio Error:" + error);
 }
 
 function setAudioPosition(position) {

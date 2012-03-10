@@ -39,16 +39,10 @@ alert(1);
 
 /* This gets audio in base64 */
 function tryGetFile(name) { 
-
+alert(name);
 	var file = name;
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
 	
-        function onFileSystemSuccess(fileSystem)
-	{
-             alert("FS: " + fileSystem.name);
-             fileSystem.root.getFile(file, {'create':false}, success, fail);
-        }
-
         function success(fileEntry) {
              alert("RESOLVE: " + fileEntry.name);
              var reader = new FileReader();
@@ -68,104 +62,78 @@ document.getElementById("datastore").value=evt.target.result;
                  console.log(prop + " = " + evt.target[prop]);
             }
        } 
+
+       function onFileSystemSuccess(fileSystem)
+       {
+            alert("FS: " + fileSystem.name);
+            fileSystem.root.getFile(file, {'create':false}, success, fail);
+       }
 }
 
+function upMedia(dataURI) {
+   var options = new FileUploadOptions();
+   options.fileKey="file";
+   options.fileName=dataURI.substr(dataURI.lastIndexOf('/')+1);
+   options.mimeType="image/jpeg";
 
-    function upMedia(dataURI) {
-            var options = new FileUploadOptions();
-            options.fileKey="file";
-            options.fileName=dataURI.substr(dataURI.lastIndexOf('/')+1);
-            options.mimeType="image/jpeg";
+   var params = new Object();
+   params.value1 = "test";
+   params.value2 = "param";
 
-            var params = new Object();
-            params.value1 = "test";
-            params.value2 = "param";
+   options.params = params;
 
-            options.params = params;
-
-            var ft = new FileTransfer();
-            ft.upload(dataURI, "http://www.taboca.com", win, fail, options);
-        }
-
-
+   var ft = new FileTransfer();
+   ft.upload(dataURI, "http://www.taboca.com", win, fail, options);
+}
 
  function playAudio(src) {
-            my_media = new Media(src, onSuccess = function () { } , onError = function () { } );
-            my_media.play();
+   my_media = new Media(src, onSuccess = function () { } , onError = function () { } );
+   my_media.play();
  }
 
-    function onLoad() {
-        document.addEventListener("deviceready", onDeviceReady, false);
-    }
-    function onDeviceReady() {
-    }
-
-    function rec() { 
-	recordAudio();
-    } 
-
-    function set(min) { 
-        recordAudio();
-    //    setTimeout("play()",min*1000*60); 
-    } 
-
-    function play() { 
-       playAudio("myrecording.mp3");
-    } 
-    // Record audio
-    // 
-    function recordAudio() {
-        var src = "myrecording.mp3";
-        var mediaRec = new Media(src, onSuccess, onError);
-
-        // Record audio
-        mediaRec.startRecord();
-
-        // Stop recording after 10 sec
-        var recTime = 0;
-        var recInterval = setInterval(function() {
-            recTime = recTime + 1;
-            setAudioPosition(recTime + " sec");
-            if (recTime >= 5) {
-                clearInterval(recInterval);
-
-function onSuccess(fileEntry) {
-    console.log(fileEntry.name);
+function onLoad() {
+    document.addEventListener("deviceready", onDeviceReady, false);
 }
 
+function onDeviceReady() {
+}
 
- function onFileSystemSuccess(fileSystem) {
-        console.log(fileSystem.name);
-    }
+function rec() { 
+  recordAudio();
+} 
 
+function set(min) { 
+    recordAudio();
+} 
 
+function play() { 
+   playAudio("myrecording.mp3");
+} 
 
-                mediaRec.stopRecord();
-		tryGetFile(mediaRec.src);
-        //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
-//window.resolveLocalFileSystemURI(mediaRec.src, onSuccess, onError);
-            }
-        }, 1000);
-    }
+function recordAudio() {
+   var src = "myrecording.mp3";
+   var mediaRec = new Media(src, onSuccess, onError);
+   mediaRec.startRecord();
+   var recTime = 0;
+   var recInterval = setInterval(function() {
+     recTime = recTime + 1;
+     setAudioPosition(recTime + " sec");
+     if (recTime >= 5) {
+       clearInterval(recInterval);
+       mediaRec.stopRecord();
+       tryGetFile(mediaRec.src);
+     }
+   }, 1000);
+}
 
-    // PhoneGap is ready
-    //
+function onSuccess() {
+   console.log("recordAudio():Audio Success");
+}
 
-    // onSuccess Callback
-    //
-    function onSuccess() {
-        console.log("recordAudio():Audio Success");
-    }
-
-    // onError Callback 
-    //
 function onError(error) {
-    alert('code: '    + error.code    + '\n' + 
-          'message: ' + error.message + '\n');
+   console.log("recordAudio():Audio Error:" + error);
 }
 
-// Set audio position
-// 
 function setAudioPosition(position) {
     document.getElementById('audio_position').innerHTML = position;
 }
